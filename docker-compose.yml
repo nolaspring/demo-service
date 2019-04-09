@@ -1,0 +1,6 @@
+version: '3.1'
+services:
+  mvp-node-api:
+    image: mvp-node-api:alpha
+    ports:
+      - 8090:8090

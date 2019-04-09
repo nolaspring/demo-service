@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dxc-poc
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: dxc-poc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dxc-poc
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dxc-poc
+  template:
+    metadata:
+      labels:
+        app: dxc-poc
+    spec:
+      containers:
+      - name: dxc-poc
+        image: cspringdxc/pipeline-demo:latest
+        ports:
+        - containerPort: 8080

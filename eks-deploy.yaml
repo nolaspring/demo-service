@@ -16,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dxc-poc
+  namespace: dev
 spec:
   replicas: 3
   selector:
@@ -28,6 +29,6 @@ spec:
     spec:
       containers:
       - name: dxc-poc
-        image: cspringdxc/pipeline-demo:2
+        image: cspringdxc/pipeline-demo:latest
         ports:
         - containerPort: 8080

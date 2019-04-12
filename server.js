@@ -3,13 +3,13 @@
 const express = require('express');
 
 // Constants
-const PORT = 8090;
+const PORT = 8080;
 const HOST = '0.0.0.0';
 
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.json({status: 200, message:'DXC Technology'});
+  res.json({status: 200, message:'Hello Kubectl Services'});
 });
 
 app.listen(PORT, HOST);

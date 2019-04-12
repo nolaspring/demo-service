@@ -1,0 +1,44 @@
+pipeline {
+
+  environment {
+    registry = "cspringdxc/pipeline-demo"
+    registryCredential = 'dockerhub'
+    containerImage = ''
+  }
+  agent any
+  stages {
+      stage('Cloning Git') {
+      steps {
+        git 'https://github.com/nolaspring/demo-service.git'
+      }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Push Image') {
+  steps{
+    script {
+      docker.withRegistry( '', registryCredential ) {
+        dockerImage.push()
+      }
+    }
+  }
+ }
+ stage('Deploy to kubes'){
+     steps{
+        sh " kubectl apply -f eks-deploy.yaml"
+     }
+
+ }
+   stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
+
+  }
+}
